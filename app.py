@@ -38,7 +38,7 @@ def guardar_cliente(data):
         ]
 
         sheet.append_row(fila)
-        st.success("Cliente guardado en Google Sheets")
+        # st.success("Cliente guardado en Google Sheets")
 
     except Exception as e:
         st.error("Error guardando en Sheets:{e}")    
