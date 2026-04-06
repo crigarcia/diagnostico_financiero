@@ -7,18 +7,27 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 def conectar_sheet():
-    scope = ["https://www.googleapis.com/auth/spreadsheets"]
+    try:
+        scope = ["https://www.googleapis.com/auth/spreadsheets"]
 
-    creds = Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"],
-        scopes=scope
-    )
+        creds = Credentials.from_service_account_info(
+            st.secrets["gcp_service_account"],
+            scopes=scope
+        )
 
-    client = gspread.authorize(creds)
+        client = gspread.authorize(creds)
 
-    sheet = client.open("clientes_finanzas").sheet1
+        st.write("✅ Conectado a Google")
 
-    return sheet
+        sheet = client.open("clientes_finanzas").sheet1
+
+        st.write("✅ Sheet abierto")
+
+        return sheet
+
+    except Exception as e:
+        st.error(f"Error en conexión: {e}")
+        return None
 def guardar_cliente(data):
     try:
         sheet = conectar_sheet()
