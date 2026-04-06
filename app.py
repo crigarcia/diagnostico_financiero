@@ -4,23 +4,21 @@ import streamlit.components.v1 as components
 import pandas as pd 
 
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 
 def conectar_sheet():
-    scope = [
-        "https://spreadsheets.google.com/feeds",
-        "https://www.googleapis.com/auth/drive"
-    ]
+    scope = ["https://www.googleapis.com/auth/spreadsheets"]
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        "credenciales.json", scope
+    creds = Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=scope
     )
 
     client = gspread.authorize(creds)
+
     sheet = client.open("clientes_finanzas").sheet1
 
     return sheet
-
 def guardar_cliente(data):
     try:
         sheet = conectar_sheet()
