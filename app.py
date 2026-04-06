@@ -37,9 +37,10 @@ def guardar_cliente(data):
         ]
 
         sheet.append_row(fila)
+        st.success("Cliente guardado en Google Sheets")
 
     except Exception as e:
-        print("Error guardando en Sheets:", e)    
+        st.error("Error guardando en Sheets:{e}")    
 
 st.set_page_config(page_title="Diagnóstico Financiero PRO", layout="centered")
 
